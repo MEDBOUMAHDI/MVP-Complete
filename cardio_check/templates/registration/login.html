@@ -1,0 +1,116 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    
+    <!--- favicon -->
+    <link rel="shortcut icon" href="{% static 'images/logo-light.jpg' %}" type="image/jpg">
+    
+    <!-- Font Library -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    <title>Cardio-Check | Login</title>
+
+  </head>
+  <body class="bg-dark">
+
+    <!-- Login Section -->
+    <section class="login-section">
+      
+      <div class="container">
+        
+        <div class="row justify-content-center">
+          <div class="col-md-12 col-lg-10">
+
+              <div class="login-wrap shadow p-4 p-md-5">
+               <!-- <img src="{% static 'images/logo-light.jpg' %}" alt="logo" height="130"> -->
+                <div class="d-flex">
+                  <div class="w-100">
+                    <h3 class="mb-4 mt-3 text-black">Login</h3>
+                  </div>
+                </div>
+                
+                <form action="{% url 'login' %}" class="signin-form" method="post">
+                  {% csrf_token %}
+
+                  <div class="form-group mb-3">
+                    <label class="label" for="email">Email</label>
+                    <input type="text" class="form-control rounded-0" name="username" placeholder="Email" required>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label class="label" for="password">Password</label>
+                    <input type="password" class="form-control mb-2  rounded-0" id="password" name="password" placeholder="Password" required>
+                    <!-- An element to toggle between password visibility -->
+                    <input type="checkbox" onclick="showPassword()"><span class="text-primary">Show Password</span>
+                  </div>
+                  
+                  <div class="form-group">
+                    <button type="submit" class="form-control btn btn-primary rounded-0 submit px-3 mb-1 loader-btn"  value="{{ next }}">Sign In</button>
+                  </div>
+                  {% if form.errors %}
+                  <div class="alert bg-danger text-white text-center rounded-0" role="alert">
+                    <p>The email or password is incorrect. Please verify your credentials and try again!</p>               
+                  </div>
+                    
+                  {% endif %}
+                  <div class="form-group d-md-flex">
+                    <div class="w-50">
+                      <a href="{% url 'register' %}" class="text-primary">No account? Sign-up here.</a>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- End container -->
+
+    </section> <!-- End Login Section -->
+   
+
+    <!--  JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            {% endfor %}
+        {% endif %}
+    </script>
+
+    <script>
+      function showPassword() {
+        var pwd_id = document.getElementById("password");
+        if (pwd_id.type === "password") {
+          pwd_id.type = "text";
+        } else {
+          pwd_id.type = "password";
+        }
+      }
+    </script>
+  </body>
+</html>
